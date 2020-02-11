@@ -2,7 +2,7 @@ package dotty.xml.interpolator
 package internal
 
 import scala.quoted._
-import scala.quoted.autolift.given
+import scala.quoted.autolift.{given _}
 import scala.quoted.matching._
 
 import scala.collection.mutable.ArrayBuffer
@@ -16,7 +16,7 @@ object Macro {
         val (xmlStr, offsets) = encode(parts)
         implicit val ctx: XmlContext = new XmlContext(args, scope)
         implicit val reporter: Reporter = new Reporter {
-          import qctx.tasty.{_, given}
+          import qctx.tasty.{_, given _}
 
           def error(msg: String, idx: Int): Unit = {
             val (part, offset) = Reporter.from(idx, offsets, parts)
@@ -40,7 +40,7 @@ object Macro {
         val (xmlStr, offsets) = encode(parts)
         implicit val ctx: XmlContext = new XmlContext(args, scope)
         implicit val reporter: Reporter = new Reporter {
-          import qctx.tasty.{_, given}
+          import qctx.tasty.{_, given _}
 
           def error(msg: String, idx: Int): Unit = {
             val (part, offset) = Reporter.from(idx, offsets, parts)
