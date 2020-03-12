@@ -12,7 +12,7 @@ object Macro {
 
   def impl(strCtxExpr: Expr[StringContext], argsExpr: Expr[Seq[Scope ?=> Any]], scope: Expr[Scope])(using qctx: QuoteContext): Expr[scala.xml.Node | scala.xml.NodeBuffer] = {
     ((strCtxExpr, argsExpr): @unchecked) match {
-      case ('{ StringContext(${ExprSeq(parts)}: _*) }, ExprSeq(args)) =>
+      case ('{ StringContext(${Varargs(parts)}: _*) }, Varargs(args)) =>
         val (xmlStr, offsets) = encode(parts)
         implicit val ctx: XmlContext = new XmlContext(args, scope)
         implicit val reporter: Reporter = new Reporter {
@@ -35,7 +35,7 @@ object Macro {
 
   def implErrors(strCtxExpr: Expr[StringContext], argsExpr: Expr[Seq[Scope ?=> Any]], scope: Expr[Scope])(using qctx: QuoteContext): Expr[List[(Int, String)]] = {
     ((strCtxExpr, argsExpr): @unchecked) match {
-      case ('{ StringContext(${ExprSeq(parts)}: _*) }, ExprSeq(args)) =>
+      case ('{ StringContext(${Varargs(parts)}: _*) }, Varargs(args)) =>
         val errors = List.newBuilder[Expr[(Int, String)]]
         val (xmlStr, offsets) = encode(parts)
         implicit val ctx: XmlContext = new XmlContext(args, scope)
