@@ -2,7 +2,7 @@ package dotty.xml.interpolator
 package internal
 
 import scala.quoted._
-import scala.quoted.autolift.{given _}
+import scala.quoted.autolift
 import scala.quoted.matching._
 
 import scala.collection.mutable.ArrayBuffer
