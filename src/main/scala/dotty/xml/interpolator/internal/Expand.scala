@@ -70,17 +70,17 @@ object Expand {
       }
       */
 
-      val term = value.unseal
+      val term = value.asTerm
       if (term.tpe <:< '[String].unseal.tpe) {
-        val value = term.seal.cast[String]
+        val value = term.asExprOf[String]
         if (attribute.prefix.isEmpty) '{ new _root_.scala.xml.UnprefixedAttribute(${Expr(attribute.key)}, $value, $rest) }
         else '{ new _root_.scala.xml.PrefixedAttribute(${Expr(attribute.prefix)}, ${Expr(attribute.key)}, $value, $rest) }
       } else if (term.tpe <:< '[collection.Seq[scala.xml.Node]].unseal.tpe) {
-        val value = term.seal.cast[collection.Seq[scala.xml.Node]]
+        val value = term.asExprOf[collection.Seq[scala.xml.Node]]
         if (attribute.prefix.isEmpty) '{ new _root_.scala.xml.UnprefixedAttribute(${Expr(attribute.key)}, $value, $rest) }
         else '{ new _root_.scala.xml.PrefixedAttribute(${Expr(attribute.prefix)}, ${Expr(attribute.key)}, $value, $rest) }
       } else {
-        val value = term.seal.cast[Option[collection.Seq[scala.xml.Node]]]
+        val value = term.asExprOf[Option[collection.Seq[scala.xml.Node]]]
         if (attribute.prefix.isEmpty) '{ new _root_.scala.xml.UnprefixedAttribute(${Expr(attribute.key)}, $value, $rest) }
         else '{ new _root_.scala.xml.PrefixedAttribute(${Expr(attribute.prefix)}, ${Expr(attribute.key)}, $value, $rest) }
       }
