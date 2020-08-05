@@ -71,11 +71,11 @@ object Expand {
       */
 
       val term = value.asTerm
-      if (term.tpe <:< '[String].unseal.tpe) {
+      if (term.tpe <:< '[String].asTypeTree.tpe) {
         val value = term.asExprOf[String]
         if (attribute.prefix.isEmpty) '{ new _root_.scala.xml.UnprefixedAttribute(${Expr(attribute.key)}, $value, $rest) }
         else '{ new _root_.scala.xml.PrefixedAttribute(${Expr(attribute.prefix)}, ${Expr(attribute.key)}, $value, $rest) }
-      } else if (term.tpe <:< '[collection.Seq[scala.xml.Node]].unseal.tpe) {
+      } else if (term.tpe <:< '[collection.Seq[scala.xml.Node]].asTypeTree.tpe) {
         val value = term.asExprOf[collection.Seq[scala.xml.Node]]
         if (attribute.prefix.isEmpty) '{ new _root_.scala.xml.UnprefixedAttribute(${Expr(attribute.key)}, $value, $rest) }
         else '{ new _root_.scala.xml.PrefixedAttribute(${Expr(attribute.prefix)}, ${Expr(attribute.key)}, $value, $rest) }
