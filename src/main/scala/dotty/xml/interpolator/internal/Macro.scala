@@ -14,7 +14,7 @@ object Macro {
         val (xmlStr, offsets) = encode(parts)
         implicit val ctx: XmlContext = new XmlContext(args, scope)
         implicit val reporter: Reporter = new Reporter {
-          import qctx.tasty._
+          import qctx.reflect._
 
           def error(msg: String, idx: Int): Unit = {
             val (part, offset) = Reporter.from(idx, offsets, parts)
@@ -38,7 +38,7 @@ object Macro {
         val (xmlStr, offsets) = encode(parts)
         implicit val ctx: XmlContext = new XmlContext(args, scope)
         implicit val reporter: Reporter = new Reporter {
-          import qctx.tasty._
+          import qctx.reflect._
 
           def error(msg: String, idx: Int): Unit = {
             val (part, offset) = Reporter.from(idx, offsets, parts)
