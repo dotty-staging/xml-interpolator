@@ -72,15 +72,15 @@ object Expand {
 
       val term = value.unseal
       if (term.tpe <:< TypeRepr.of[String]) {
-        val value = term.seal.cast[String]
+        val value = term.asExprOf[String]
         if (attribute.prefix.isEmpty) '{ new _root_.scala.xml.UnprefixedAttribute(${Expr(attribute.key)}, $value, $rest) }
         else '{ new _root_.scala.xml.PrefixedAttribute(${Expr(attribute.prefix)}, ${Expr(attribute.key)}, $value, $rest) }
       } else if (term.tpe <:< TypeRepr.of[collection.Seq[scala.xml.Node]]) {
-        val value = term.seal.cast[collection.Seq[scala.xml.Node]]
+        val value = term.asExprOf[collection.Seq[scala.xml.Node]]
         if (attribute.prefix.isEmpty) '{ new _root_.scala.xml.UnprefixedAttribute(${Expr(attribute.key)}, $value, $rest) }
         else '{ new _root_.scala.xml.PrefixedAttribute(${Expr(attribute.prefix)}, ${Expr(attribute.key)}, $value, $rest) }
       } else {
-        val value = term.seal.cast[Option[collection.Seq[scala.xml.Node]]]
+        val value = term.asExprOf[Option[collection.Seq[scala.xml.Node]]]
         if (attribute.prefix.isEmpty) '{ new _root_.scala.xml.UnprefixedAttribute(${Expr(attribute.key)}, $value, $rest) }
         else '{ new _root_.scala.xml.PrefixedAttribute(${Expr(attribute.prefix)}, ${Expr(attribute.key)}, $value, $rest) }
       }
@@ -95,7 +95,7 @@ object Expand {
         case Text(text) => Expr(text)
         case Placeholder(id) =>
           val call = '{ ${ctx.args(id)}(using _root_.scala.xml.TopScope) }
-          Expr.betaReduce(call).cast[String]
+          Expr.betaReduce(call).asExprOf[String]
       }
       '{ new _root_.scala.xml.NamespaceBinding($prefix, $uri, $rest) }
     })
