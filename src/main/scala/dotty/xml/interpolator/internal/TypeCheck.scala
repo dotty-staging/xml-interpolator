@@ -34,7 +34,7 @@ object TypeCheck {
                   s"""type mismatch;
                     | found   : ${term.tpe.widen.show}
                     | required: ${expected.map(_.show).mkString(" | ")}
-                  """.stripMargin, term.seal)
+                  """.stripMargin, term.asExpr)
               }
             case _ =>
         })
