@@ -18,7 +18,7 @@ object Macro {
 
           def error(msg: String, idx: Int): Unit = {
             val (part, offset) = Reporter.from(idx, offsets, parts)
-            val pos = part.unseal.pos
+            val pos = Term.of(part).pos
             val (srcF, start) = (pos.sourceFile, pos.start)
             Reporting.error(msg, srcF, start + offset, start + offset + 1)
           }
@@ -42,12 +42,12 @@ object Macro {
 
           def error(msg: String, idx: Int): Unit = {
             val (part, offset) = Reporter.from(idx, offsets, parts)
-            val start = part.unseal.pos.start - parts(0).unseal.pos.start
+            val start = Term.of(part).pos.start - Term.of(parts(0)).pos.start
             errors += Expr((start + offset, msg))
           }
 
           def error(msg: String, expr: Expr[Any]): Unit = {
-            val pos = expr.unseal.pos
+            val pos = Term.of(expr).pos
             errors += Expr((pos.start, msg))
           }
         }
