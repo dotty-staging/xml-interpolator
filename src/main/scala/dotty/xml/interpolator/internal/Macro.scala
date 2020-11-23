@@ -8,7 +8,7 @@ import scala.language.implicitConversions
 
 object Macro {
 
-  def impl(strCtxExpr: Expr[StringContext], argsExpr: Expr[Seq[Scope ?=> Any]], scope: Expr[Scope])(using qctx: Quotes): Expr[scala.xml.Node | scala.xml.NodeBuffer] = {
+  def impl(strCtxExpr: Expr[StringContext], argsExpr: Expr[Seq[Scope ?=> Any]], scope: Expr[Scope])(using Quotes): Expr[scala.xml.Node | scala.xml.NodeBuffer] = {
     ((strCtxExpr, argsExpr): @unchecked) match {
       case ('{ StringContext(${Varargs(parts)}: _*) }, Varargs(args)) =>
         val (xmlStr, offsets) = encode(parts)
@@ -31,7 +31,7 @@ object Macro {
     }
   }
 
-  def implErrors(strCtxExpr: Expr[StringContext], argsExpr: Expr[Seq[Scope ?=> Any]], scope: Expr[Scope])(using qctx: Quotes): Expr[List[(Int, String)]] = {
+  def implErrors(strCtxExpr: Expr[StringContext], argsExpr: Expr[Seq[Scope ?=> Any]], scope: Expr[Scope])(using Quotes): Expr[List[(Int, String)]] = {
     ((strCtxExpr, argsExpr): @unchecked) match {
       case ('{ StringContext(${Varargs(parts)}: _*) }, Varargs(args)) =>
         val errors = List.newBuilder[Expr[(Int, String)]]
