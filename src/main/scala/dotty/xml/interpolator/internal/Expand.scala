@@ -41,7 +41,7 @@ object Expand {
     val attributes1 = expandAttributes(attributes)
     val scope = expandNamespaces(namespaces)
     val empty = Expr(elem.end.isEmpty)
-    val child = expandNodes(elem.children)(using new XmlContext(ctx.args, scope), qctx)
+    val child = expandNodes(elem.children)(using new XmlContext(ctx.args, scope), quotes)
     if (elem.children.isEmpty)
       '{ new _root_.scala.xml.Elem($prefix, $label, $attributes1, $scope, $empty) }
     else
@@ -49,7 +49,7 @@ object Expand {
   }
 
   private def expandAttributes(attributes: Seq[Attribute])(using XmlContext, Quotes): Expr[scala.xml.MetaData] = {
-    import qctx.reflect._
+    import quotes.reflect._
     attributes.foldRight('{ _root_.scala.xml.Null }: Expr[scala.xml.MetaData])((attribute, rest) => {
       val value = attribute.value match {
           case Seq(v) => expandNode(v)
@@ -88,7 +88,7 @@ object Expand {
   }
 
   private def expandNamespaces(namespaces: Seq[Attribute])(using XmlContext, Quotes): Expr[scala.xml.NamespaceBinding] = {
-    import qctx.reflect._
+    import quotes.reflect._
     namespaces.foldLeft(ctx.scope)((rest, namespace) => {
       val prefix = if (namespace.prefix.nonEmpty) Expr(namespace.key) else '{ null: String }
       val uri = (namespace.value.head: @unchecked) match {
