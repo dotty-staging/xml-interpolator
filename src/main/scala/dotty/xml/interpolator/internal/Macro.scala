@@ -20,7 +20,7 @@ object Macro {
             val (part, offset) = Reporter.from(idx, offsets, parts)
             val pos = Term.of(part).pos
             val (srcF, start) = (pos.sourceFile, pos.start)
-            report.error(msg, srcF, start + offset, start + offset + 1)
+            report.error(msg, Position(srcF, start + offset, start + offset + 1))
           }
 
           def error(msg: String, expr: Expr[Any]): Unit = {
