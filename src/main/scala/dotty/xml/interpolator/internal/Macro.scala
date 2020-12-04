@@ -80,7 +80,7 @@ object Macro {
     val bf = ArrayBuffer.empty[Int]
 
     def appendPart(part: Expr[String]) = {
-      val value = part.unliftOrError
+      val value = part.valueOrError
       bf += sb.length
       sb ++= value
       bf += sb.length
