@@ -20,7 +20,7 @@ object TypeCheck {
             case Seq(Placeholder(id)) =>
               val dummy = '{ _root_.scala.xml.TopScope }
               val expr = summon[XmlContext].args(id)
-              val term = Term.of(Expr.betaReduce('{$expr(using $dummy)}))
+              val term = Expr.betaReduce('{$expr(using $dummy)}).asTerm
               val expected = attribute.isNamespace match {
                 case true => Seq(TypeRepr.of[String])
                 case _ => Seq(

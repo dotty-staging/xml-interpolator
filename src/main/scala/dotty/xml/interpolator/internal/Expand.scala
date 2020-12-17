@@ -70,7 +70,7 @@ object Expand {
       }
       */
 
-      val term = Term.of(value)
+      val term = value.asTerm
       if (term.tpe <:< TypeRepr.of[String]) {
         val value = term.asExprOf[String]
         if (attribute.prefix.isEmpty) '{ new _root_.scala.xml.UnprefixedAttribute(${Expr(attribute.key)}, $value, $rest) }
