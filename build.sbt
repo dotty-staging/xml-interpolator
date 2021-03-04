@@ -11,8 +11,8 @@ lazy val root = project
       "-Xprint-inline"
     ),
     libraryDependencies ++= Seq(
-      ("org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2").withDottyCompat(scalaVersion.value),
-      ("org.scala-lang.modules" %% "scala-xml" % "1.2.0").withDottyCompat(scalaVersion.value),
+      ("org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2").cross(CrossVersion.for3Use2_13),
+      ("org.scala-lang.modules" %% "scala-xml" % "1.2.0").cross(CrossVersion.for3Use2_13),
       "com.novocode" % "junit-interface" % "0.11" % "test"
     )
   )
